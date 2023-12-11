@@ -10,14 +10,17 @@ import UserManualScreen from '../screens/UserManualScreen';
 const Stack = createStackNavigator();
 
 const AppNavigator = () => (
-  <Stack.Navigator initialRouteName="Home">
-    <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="ImageUpload" component={ImageUploadScreen} />
-    <Stack.Screen name="History" component={HistoryScreen} />
-    <Stack.Screen name="PlantList" component={PlantListScreen} />
-    <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
-    <Stack.Screen name="UserManual" component={UserManualScreen} />
-  </Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home"
+        screenOptions={{
+            headerShown: false
+        }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ImageUpload" component={ImageUploadScreen} />
+        <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="PlantList" component={PlantListScreen} />
+        <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
+        <Stack.Screen name="UserManual" component={UserManualScreen} />
+    </Stack.Navigator>
 );
 
 export default AppNavigator;
