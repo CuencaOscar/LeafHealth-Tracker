@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Image, LogBox } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Footer from '../components/Footer';
-import { homeScreenStyles } from '../styles/homeScreenStyles';
+import { homeScreenStyles } from '../styles/screenStyles';
 import { useNavigation } from '@react-navigation/native';
 import { homeScreenTexts } from '../resources/textResources';
 import ButtonList from '../components/ButtonList';

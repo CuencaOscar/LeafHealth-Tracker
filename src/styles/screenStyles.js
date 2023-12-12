@@ -45,3 +45,11 @@ export const homeScreenStyles = StyleSheet.create({
         textAlign: 'center',
     },
 });
+
+export const plantListScreenStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        // alignItems: 'center',
+        // justifyContent: 'space-between',
+    },
+});

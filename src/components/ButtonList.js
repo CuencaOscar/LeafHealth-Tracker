@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from 'react-native'
 import { TouchableOpacity, View } from 'react-native'
-import { homeScreenStyles } from '../styles/homeScreenStyles'
+import { homeScreenStyles } from '../styles/screenStyles'
 
 const ButtonList = ({ buttons }) => {
     return (
