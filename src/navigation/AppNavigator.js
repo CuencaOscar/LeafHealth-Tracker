@@ -12,9 +12,7 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
     const insets = useSafeAreaInsets();
-    console.log('Tenemos: ', insets.top)
     return (
-        // <SafeAreaView style={{ flex: 1, backgroundColor: 'white', paddingTop: insets.top }}>
             <Stack.Navigator initialRouteName="Home"
                 screenOptions={{
                     headerShown: false
@@ -26,7 +24,6 @@ const AppNavigator = () => {
                 <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
                 <Stack.Screen name="UserManual" component={UserManualScreen} />
             </Stack.Navigator>
-        // </SafeAreaView>
     )
 };
 

@@ -15,7 +15,6 @@ const PlantListScreen = () => {
         const querySnapshot = await getDocs(collection(db, 'plants'));
         const fetchedPlants = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setPlants(fetchedPlants);
-        console.log('Las plantas son: ', plants)
       } catch (error) {
         console.error("Error al obtener los datos: ", error);
       }
