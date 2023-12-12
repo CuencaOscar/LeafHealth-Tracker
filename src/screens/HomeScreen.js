@@ -1,30 +1,33 @@
 import React from 'react';
-import { Text, Image } from 'react-native';
+import { Text, Image, LogBox } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Footer from '../components/Footer';
 import { homeScreenStyles } from '../styles/homeScreenStyles';
+import { useNavigation } from '@react-navigation/native';
 import { homeScreenTexts } from '../resources/textResources';
 import ButtonList from '../components/ButtonList';
 
 
 const HomeScreen = () => {
+    LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered']);
+    const navigation = useNavigation();
     const buttonData = [
         {
             title: homeScreenTexts.captureUploadButton,
             onPress: () => {
-                console.log('ImageUpload Screen')
-            },
-        },
-        {
-            title: homeScreenTexts.userManualButton,
-            onPress: () => {
-                console.log('User Manual Screen')
+                navigation.navigate('ImageUpload');
             },
         },
         {
             title: homeScreenTexts.plantListButton,
             onPress: () => {
-                console.log('Plant List Screen')
+                navigation.navigate('PlantList');
+            },
+        },
+        {
+            title: homeScreenTexts.userManualButton,
+            onPress: () => {
+                navigation.navigate('UserManual');
             },
         },
     ];
