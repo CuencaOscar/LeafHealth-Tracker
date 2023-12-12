@@ -35,7 +35,6 @@ export const homeScreenStyles = StyleSheet.create({
         backgroundColor: '#4caf50',
         padding: 10,
         borderRadius: 10,
-        bottom: 80,
         paddingHorizontal: 20,
         marginVertical: 5,
     },

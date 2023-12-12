@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, LogBox } from 'react-native';
+import { Text, Image, LogBox, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Footer from '../components/Footer';
 import { homeScreenStyles } from '../styles/screenStyles';
@@ -41,7 +41,9 @@ const HomeScreen = () => {
                 source={require('../../assets/images/portada.png')}
                 style={homeScreenStyles.backgroundImage}
             />
-            <ButtonList buttons={buttonData} />
+            <View style={{flex:1, justifyContent: 'flex-end'}}>
+                <ButtonList buttons={buttonData} />
+            </View>
             <Footer />
         </LinearGradient>
     );
