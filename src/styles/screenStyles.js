@@ -48,7 +48,5 @@ export const homeScreenStyles = StyleSheet.create({
 export const plantListScreenStyles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'space-between',
     },
 });

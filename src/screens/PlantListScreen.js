@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, View } from 'react-native';
-import { db } from '../firebaseConfig';
+import React, { useState, useEffect } from "react";
+import { FlatList, View, SafeAreaView } from "react-native";
+import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import PlantCard from '../components/PlantCard';
-import { LinearGradient } from 'expo-linear-gradient';
-import { plantListScreenStyles } from '../styles/screenStyles';
-import PlantCardSkeleton from '../components/PlantCardSkeleton';
+import PlantCard from "../components/PlantCard";
+import { LinearGradient } from "expo-linear-gradient";
+import { plantListScreenStyles } from "../styles/screenStyles";
+import PlantCardSkeleton from "../components/PlantCardSkeleton";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const PlantListScreen = () => {
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const fetchPlants = async () => {
       try {
         setLoading(true);
-        const querySnapshot = await getDocs(collection(db, 'plants'));
-        const fetchedPlants = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const querySnapshot = await getDocs(collection(db, "plants"));
+        const fetchedPlants = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setPlants(fetchedPlants);
       } catch (error) {
         console.error("Error al obtener los datos: ", error);
@@ -36,20 +41,20 @@ const PlantListScreen = () => {
 
   return (
     <LinearGradient
-      colors={['#2e7d32', '#388e3c', '#43a047']}
-      style={plantListScreenStyles.container}
+      colors={["#2e7d32", "#388e3c", "#43a047"]}
+      style={{...plantListScreenStyles.container, paddingTop: insets.top}}
     >
-      {loading ? (
-        <View>{renderSkeletons()}</View>
-      ) : (
-        <FlatList
-          data={plants}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <PlantCard plant={item} />
-          )}
-        />
-      )}
+      <SafeAreaView>
+        {loading ? (
+          <View>{renderSkeletons()}</View>
+        ) : (
+          <FlatList
+            data={plants}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <PlantCard plant={item} />}
+          />
+        )}
+      </SafeAreaView>
     </LinearGradient>
   );
 };
