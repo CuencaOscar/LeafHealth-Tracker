@@ -1,6 +1,7 @@
 // import { initializeApp, getApps } from "firebase/app";
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
     apiKey: "REDACTED_FIREBASE_API_KEY",
     authDomain: "leafhealth-tracker.firebaseapp.com",
@@ -19,5 +20,6 @@ const firebaseConfig = {
 
   const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const db_storage = getStorage(app);
 
-export { db };
+export { db, db_storage };

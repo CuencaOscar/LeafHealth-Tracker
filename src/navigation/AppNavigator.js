@@ -7,6 +7,7 @@ import HistoryScreen from '../screens/HistoryScreen';
 import PlantListScreen from '../screens/PlantListScreen';
 import PlantDetailScreen from '../screens/PlantDetailScreen';
 import UserManualScreen from '../screens/UserManualScreen';
+import CameraScreen from '../screens/CameraScreen';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="PlantList" component={PlantListScreen} />
                 <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
                 <Stack.Screen name="UserManual" component={UserManualScreen} />
+                <Stack.Screen name="Camera" component={CameraScreen} />
             </Stack.Navigator>
     )
 };

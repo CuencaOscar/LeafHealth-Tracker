@@ -5,8 +5,10 @@ import { GreenLeavesSvgAndroid, GreenLeavesSvgiOS } from '../../assets/svg/Green
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { imageUploadScreenTexts } from '../resources/textResources';
 import ButtonList from '../components/ButtonList';
+import { useNavigation } from '@react-navigation/native';
 
 const ImageUploadScreen = () => {
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   console.log('Los datos que tengo son: ', insets)
@@ -16,6 +18,7 @@ const ImageUploadScreen = () => {
       title: imageUploadScreenTexts.takePhotoButton,
       onPress: () => {
         console.log('Take')
+        navigation.navigate('Camera')
       },
     },
     {
