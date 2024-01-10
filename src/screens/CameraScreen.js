@@ -7,18 +7,12 @@ import * as Location from "expo-location";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { Button } from "../components/Button";
-//   import * as firebase from 'firebase/app';
-//   import { firebaseConfig } from '../../firebase-config';
 import uuid from "react-native-uuid";
 import { env } from "../env/env";
 import { db, db_storage } from "../firebaseConfig";
 
 const CameraScreen = () => {
-//   firebase.initializeApp(firebaseConfig)
 
-//   const firestore = getFirestore();
-
-//   const storage = getStorage();
   const storageRef = ref(db_storage, uuid.v4());
 
   const cameraRef = useRef(null);
@@ -141,7 +135,7 @@ const CameraScreen = () => {
           <Camera style={styles.camera} ref={cameraRef} zoom={0}>
             {isLoading && (
               <View style={styles.container_message_style}>
-                <Text style={styles.message_style}>Capturando</Text>
+                <Text style={styles.message_style}>Capturing</Text>
               </View>
             )}
           </Camera>
@@ -153,7 +147,7 @@ const CameraScreen = () => {
             <>
               <View style={styles.navbar_Picture}>
                 <Button
-                  title={"Tomar de nuevo"}
+                  title={"Retake"}
                   icon="retweet"
                   color={"green"}
                   disabled={!visiblePicture}
@@ -164,7 +158,7 @@ const CameraScreen = () => {
                   }}
                 />
                 <Button
-                  title={"Guardar"}
+                  title={"Save"}
                   icon="check"
                   color={"green"}
                   disabled={!visiblePicture}
@@ -187,14 +181,14 @@ const CameraScreen = () => {
           ) : (
             <View style={styles.navbar_Picture}>
               <Button
-                title={"Principal"}
+                title={"Home"}
                 icon="home"
                 color={"green"}
                 disabled={!visible}
                 onPress={() => navigation.navigate("Home")}
               />
               <Button
-                title={"Tomar Fotografía"}
+                title={"Take Picture"}
                 icon="camera"
                 color={"green"}
                 disabled={!visible}
@@ -230,11 +224,22 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
   navbar_Picture: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
-    alignItems: "flex-end",
-    backgroundColor: "rgba(204, 236, 92, 1)",
+    paddingVertical: 15,
+    alignItems: 'center',
+    backgroundColor: '#4caf50',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   loading_indicator: {
     bottom: "300%",
