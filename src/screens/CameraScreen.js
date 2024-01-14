@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Image, StyleSheet, View, Text, ActivityIndicator } from "react-native";
-import { ref, getStorage, uploadBytes } from "firebase/storage";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import { Camera } from "expo-camera";
+import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from "expo-media-library";
 import { Button } from "../components/Button";
 import uuid from "react-native-uuid";
@@ -38,6 +39,10 @@ const CameraScreen = () => {
       MediaLibrary.requestPermissionsAsync();
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === "granted");
+      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (galleryStatus.status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
     })();
   }, []);
 
@@ -66,8 +71,27 @@ const CameraScreen = () => {
         setImage(data.uri);
         setIsLoading(!isLoading);
         setUri(data.uri);
-      } catch (e) {}
+      } catch (e) { }
     }
+  };
+
+  const pickImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (!result.canceled) {
+        const selectedAsset = result.assets[0];
+        setImage(selectedAsset.uri);
+        setIsLoading(!isLoading);
+        setUri(selectedAsset.uri);
+      } else {
+        setIsLoading(false);
+      }
+    } catch (e) { }
   };
 
   const uploadImage = (uri) => {
@@ -92,11 +116,16 @@ const CameraScreen = () => {
           const path =
             env.firebase_env + snapshot.metadata.fullPath + "?alt=media";
           let formData = new FormData();
-          formData.append("imagen", path);
+          formData.append("image", path);
           let xhr = new XMLHttpRequest();
+          console.log('El formdata que se manda es: ', formData)
           xhr.open("POST", env.ngrok);
           xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+              console.log('Vamos que se puede')
+              console.log('1')
+              console.log('El response text es: ', this.response.text)
+              console.log('El response es: ', this. response)
               const resultado = eval(this.responseText);
               addDoc(collection(db, "historical"), {
                 image_path: path,
@@ -110,10 +139,12 @@ const CameraScreen = () => {
                 longitude: locationData.longitude,
                 createdAt: hoy.getTime(),
               });
+              console.log('2')
               setIsTrainning(false);
               navigation.navigate("List");
             } else {
-                console.log('Al final no envio nada')
+              setIsLoading(!isLoading);
+              console.log('Al final no envio nada')
             }
           };
           xhr.send(formData);
@@ -129,84 +160,93 @@ const CameraScreen = () => {
   }
 
   return (
-    <>
-      <View style={styles.container}>
-        {!image ? (
-          <Camera style={styles.camera} ref={cameraRef} zoom={0}>
-            {isLoading && (
-              <View style={styles.container_message_style}>
-                <Text style={styles.message_style}>Capturing</Text>
-              </View>
-            )}
-          </Camera>
-        ) : (
-          <Image style={styles.camera} source={{ uri: image }} />
-        )}
-        <View>
-          {image ? (
-            <>
-              <View style={styles.navbar_Picture}>
-                <Button
-                  title={"Retake"}
-                  icon="retweet"
-                  color={"green"}
-                  disabled={!visiblePicture}
-                  onPress={() => {
-                    setImage(null);
-                    setIsLoading(!isLoading);
-                    setVisible(true);
-                  }}
-                />
-                <Button
-                  title={"Save"}
-                  icon="check"
-                  color={"green"}
-                  disabled={!visiblePicture}
-                  onPress={() => {
-                    uploadImage(uri);
-                  }}
-                />
-              </View>
-              {isTrainning && (
-                <View
-                  style={[
-                    styles.container_message_style,
-                    styles.loading_indicator,
-                  ]}
-                >
-                  <ActivityIndicator size="large" color="#7bc4db" />
-                </View>
-              )}
-            </>
-          ) : (
-            <View style={styles.navbar_Picture}>
-              <Button
-                title={"Home"}
-                icon="home"
-                color={"green"}
-                disabled={!visible}
-                onPress={() => navigation.navigate("Home")}
-              />
-              <Button
-                title={"Take Picture"}
-                icon="camera"
-                color={"green"}
-                disabled={!visible}
-                onPress={takePicture}
-              />
+    <View style={styles.container}>
+      {!image ? (
+        <Camera style={styles.camera} ref={cameraRef} zoom={0}>
+          {isLoading && (
+            <View style={styles.container_message_style}>
+              <Text style={styles.message_style}>Capturing</Text>
             </View>
           )}
-        </View>
+        </Camera>
+      ) : (
+        <Image style={styles.camera} source={{ uri: image }} />
+      )}
+      <View style={styles.buttonContainer}>
+        {image ? (
+          <>
+            <Button
+              title={""}
+              icon="retweet"
+              color={"green"}
+              disabled={!visiblePicture}
+              size={40}
+              onPress={() => {
+                setImage(null);
+                setIsLoading(!isLoading);
+                setVisible(true);
+              }}
+            />
+            <Button
+              title={""}
+              icon="check"
+              color={"green"}
+              disabled={!visiblePicture}
+              size={40}
+              onPress={() => {
+                uploadImage(uri);
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              title={""}
+              icon="home"
+              color={"green"}
+              disabled={!visible}
+              size={40}
+              onPress={() => navigation.navigate("Home")}
+            />
+            <Button
+              title={""}
+              icon="camera"
+              color={"green"}
+              disabled={!visible}
+              size={40}
+              onPress={takePicture}
+            />
+            <Button
+              title={""}
+              icon="folder-images"
+              color={"green"}
+              disabled={!visible}
+              size={40}
+              onPress={pickImage}
+            />
+          </>
+        )}
       </View>
-    </>
+      {isTrainning && (
+        <View
+          style={[
+            styles.container_message_style,
+            styles.loading_indicator,
+          ]}
+        >
+          <ActivityIndicator size="large" color="#7bc4db" />
+        </View>
+      )}
+    </View>
   );
+
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
-    justifyContent: "center",
+    position: "relative",
   },
   container_message_style: {
     flex: 1,
@@ -220,16 +260,20 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-    borderRadius: 20,
-    resizeMode: "stretch",
+    // borderRadius: 20,
+    resizeMode: "contain",
   },
-  navbar_Picture: {
+  buttonContainer: {
+    position: "absolute",
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingVertical: 15,
     alignItems: 'center',
-    backgroundColor: '#4caf50',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'transparent',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.1)',
     shadowColor: '#000',
@@ -239,10 +283,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
-    elevation: 5,
   },
   loading_indicator: {
-    bottom: "300%",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -50 }, { translateY: -50 }],
     flexDirection: "column",
     justifyContent: "space-between",
   },

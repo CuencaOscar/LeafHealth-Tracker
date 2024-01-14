@@ -14,8 +14,10 @@ const PlantDetailScreen = ({ route }) => {
       style={styles.container}
     >
       <Appbar.Header style={styles.appbar}>
-        <Appbar.BackAction onPress={() => navigation.navigate('PlantList')} />
-        <Appbar.Content title={disease.name} />
+        {Platform.OS === 'android' && (
+          <Appbar.BackAction onPress={() => navigation.navigate('PlantList')} />
+        )}
+        <Appbar.Content title={disease.name} titleStyle={styles.title_header}/>
       </Appbar.Header>
       <ScrollView style={styles.scrollView}>
         <Image source={{ uri: disease.imageUrl }} style={styles.image} />
@@ -49,16 +51,22 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 250,
-    borderRadius: 10,
+    aspectRatio: 16 /16,
+    borderRadius: 20,
     marginBottom: 16,
   },
   card: {
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 10,
+    borderRadius: 20,
   },
   cardContent: {
     padding: 16,
+  },
+  title_header: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: Platform.OS === 'android' ? 20 : 24,
+    fontWeight: 'bold'
   },
   title: {
     fontSize: 24,
@@ -67,10 +75,11 @@ const styles = StyleSheet.create({
     color: '#2e7d32',
   },
   paragraph: {
-    fontSize: 18,
+    fontSize: 15,
     marginBottom: 16,
     textAlign: 'justify',
     color: 'black',
+    lineHeight: Platform.OS === 'android' ? 25 : 30,
   },
 });
 

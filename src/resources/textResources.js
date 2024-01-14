@@ -8,5 +8,10 @@ export const homeScreenTexts = {
 export const imageUploadScreenTexts = {
     title: "Leaf Health Check",
     takePhotoButton: "Take Foto",
-    uploadFromGalerryButton: "Upload From Gallery",
+    homeButton: "Home",
+    historicalButton: "Historical"
+};
+
+export const historicalScreenTexts = {
+    title: "Historical",
 };

@@ -2,14 +2,14 @@ import * as React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-const Button = ({ title, onPress, icon, color, disabled = false }) => {
+const Button = ({ title, onPress, icon, color, disabled = false, size=24 }) => {
     return (
         <TouchableOpacity 
             onPress={onPress} 
             style={[styles.button, disabled ? styles.disabledButton : null]}
             disabled={disabled}>
-            <Entypo name={icon} size={24} color={color ? color : 'green'} />
-            <Text style={styles.text}>{title}</Text>
+            <Entypo name={icon} size={size} color={color ? color : 'green'} />
+            {title !== '' && <Text style={styles.text}>{title}</Text>}
         </TouchableOpacity>
     );
 };
@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 10,
+        paddingVertical: 15,
         paddingHorizontal: 15,
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderRadius: 50,
         borderWidth: 1,
         borderColor: 'green',
         marginHorizontal: 5,

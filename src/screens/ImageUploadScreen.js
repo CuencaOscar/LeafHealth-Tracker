@@ -11,8 +11,6 @@ const ImageUploadScreen = () => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
-  console.log('Los datos que tengo son: ', insets)
-
   const buttonImageUploadScreen = [
     {
       title: imageUploadScreenTexts.takePhotoButton,
@@ -22,9 +20,16 @@ const ImageUploadScreen = () => {
       },
     },
     {
-      title: imageUploadScreenTexts.uploadFromGalerryButton,
+      title: imageUploadScreenTexts.homeButton,
       onPress: () => {
-        console.log('Load')
+        navigation.navigate('Home')
+      },
+    },
+    {
+      title: imageUploadScreenTexts.historicalButton,
+      onPress: () => {
+        console.log('Historical')
+        navigation.navigate('Historical')
       },
     },
   ];

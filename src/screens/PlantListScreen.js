@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, View, SafeAreaView } from "react-native";
+import { Appbar } from 'react-native-paper';
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import PlantCard from "../components/PlantCard";
 import { LinearGradient } from "expo-linear-gradient";
 import { plantListScreenStyles } from "../styles/screenStyles";
 import PlantCardSkeleton from "../components/PlantCardSkeleton";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 const PlantListScreen = () => {
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchPlants = async () => {
@@ -29,7 +30,6 @@ const PlantListScreen = () => {
         setLoading(false);
       }
     };
-
     fetchPlants();
   }, []);
 
@@ -42,9 +42,15 @@ const PlantListScreen = () => {
   return (
     <LinearGradient
       colors={["#2e7d32", "#388e3c", "#43a047"]}
-      style={{...plantListScreenStyles.container, paddingTop: insets.top}}
+      style={{ ...plantListScreenStyles.container }}
     >
-      <SafeAreaView>
+      <Appbar.Header style={plantListScreenStyles.appbar}>
+        {Platform.OS === 'android' && (
+          <Appbar.BackAction onPress={() => navigation.navigate('Home')} />
+        )}
+        <Appbar.Content title={'Disease Types'} titleStyle={plantListScreenStyles.title_header} />
+      </Appbar.Header>
+      <SafeAreaView style={{ ...plantListScreenStyles.container }}>
         {loading ? (
           <View>{renderSkeletons()}</View>
         ) : (

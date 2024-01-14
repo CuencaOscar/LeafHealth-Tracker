@@ -49,4 +49,14 @@ export const plantListScreenStyles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    appbar: {
+        backgroundColor: 'transparent',
+        elevation: 0,
+    },
+    title_header: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: Platform.OS === 'android' ? 20 : 24,
+        fontWeight: 'bold'
+    },
 });
