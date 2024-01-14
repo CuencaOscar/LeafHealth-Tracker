@@ -24,9 +24,7 @@ const PlantListScreen = () => {
           ...doc.data(),
         }));
         setPlants(fetchedPlants);
-      } catch (error) {
-        console.error("Error al obtener los datos: ", error);
-      } finally {
+      } catch (error) {} finally {
         setLoading(false);
       }
     };

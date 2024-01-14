@@ -8,6 +8,7 @@ import { Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { plantListScreenStyles } from '../styles/screenStyles';
 import PlantCardSkeleton from '../components/PlantCardSkeleton';
+import HistoricalCard from '../components/HistoricalCard';
 
 const HistoricalScreen = () => {
   const [historical, setHistorical] = useState([]);
@@ -24,9 +25,7 @@ const HistoricalScreen = () => {
           ...doc.data(),
         }));
         setHistorical(fetchedHistorical);
-      } catch (error) {
-        console.error("Error al obtener los datos: ", error);
-      } finally {
+      } catch (error) {} finally {
         setLoading(false);
       }
     };
@@ -57,7 +56,7 @@ const HistoricalScreen = () => {
           <FlatList
             data={historical}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <PlantCard plant={item} />}
+            renderItem={({ item }) => <HistoricalCard historical={item} />}
           />
         )}
       </SafeAreaView>

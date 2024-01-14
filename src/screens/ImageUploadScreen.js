@@ -15,7 +15,6 @@ const ImageUploadScreen = () => {
     {
       title: imageUploadScreenTexts.takePhotoButton,
       onPress: () => {
-        console.log('Take')
         navigation.navigate('Camera')
       },
     },
@@ -28,7 +27,6 @@ const ImageUploadScreen = () => {
     {
       title: imageUploadScreenTexts.historicalButton,
       onPress: () => {
-        console.log('Historical')
         navigation.navigate('Historical')
       },
     },

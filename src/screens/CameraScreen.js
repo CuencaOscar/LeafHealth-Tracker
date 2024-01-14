@@ -120,12 +120,12 @@ const CameraScreen = () => {
           xhr.open("POST", env.ngrok);
           xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-              const resultado = this.responseText;
+              const resultado = JSON.parse(this.responseText);
               addDoc(collection(db, "historical"), {
                 image_path: path,
-                type_one: `${resultado[0].class}: ${resultado[0].probability}%`,
-                type_two: `${resultado[1].class}: ${resultado[1].probability}%`,
-                type_three: `${resultado[2].class}: ${resultado[2].probability}%`,
+                type_one: resultado[0]['class'] + ': ' + resultado[0]['probability'] + '%',
+                type_two: resultado[1]['class'] + ': ' + resultado[1]['probability'] + '%',
+                type_three: resultado[2]['class'] + ': ' + resultado[2]['probability'] + '%',
                 latitude: locationData.latitude,
                 longitude: locationData.longitude,
                 createdAt: hoy.getTime(),

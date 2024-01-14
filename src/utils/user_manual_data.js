@@ -58,7 +58,7 @@ const user_manual_data = [
     },
     {
         "title": "Historical Screen",
-        "img_path": require('../../assets/images/home_screen.png'),
+        "img_path": require('../../assets/images/historical_screen.png'),
         "description": "Explore your plant health journey in our History page, where each " +
         "image you've captured tells a story. This archive displays a chronological list of " +
         "all your captured images, each annotated with its disease classification, and the " +
