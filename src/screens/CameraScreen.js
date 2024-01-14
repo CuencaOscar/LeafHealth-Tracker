@@ -111,40 +111,29 @@ const CameraScreen = () => {
       xhr.send();
     })
       .then((resolve) => {
-        console.log('entro por aqui')
         uploadBytes(storageRef, resolve).then((snapshot) => {
           const path =
             env.firebase_env + snapshot.metadata.fullPath + "?alt=media";
           let formData = new FormData();
           formData.append("image", path);
           let xhr = new XMLHttpRequest();
-          console.log('El formdata que se manda es: ', formData)
           xhr.open("POST", env.ngrok);
           xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-              console.log('Vamos que se puede')
-              console.log('1')
-              console.log('El response text es: ', this.response.text)
-              console.log('El response es: ', this. response)
-              const resultado = eval(this.responseText);
+              const resultado = this.responseText;
               addDoc(collection(db, "historical"), {
                 image_path: path,
-                type_one: resultado[0][0] + ":",
-                type_two: resultado[1][0] + ":",
-                type_three: resultado[2][0] + ":",
-                prediction_one: resultado[0][1].toFixed(2) + "%",
-                prediction_two: resultado[1][1].toFixed(2) + "%",
-                prediction_three: resultado[2][1].toFixed(2) + "%",
+                type_one: `${resultado[0].class}: ${resultado[0].probability}%`,
+                type_two: `${resultado[1].class}: ${resultado[1].probability}%`,
+                type_three: `${resultado[2].class}: ${resultado[2].probability}%`,
                 latitude: locationData.latitude,
                 longitude: locationData.longitude,
                 createdAt: hoy.getTime(),
               });
-              console.log('2')
               setIsTrainning(false);
-              navigation.navigate("List");
+              navigation.navigate("Historical");
             } else {
               setIsLoading(!isLoading);
-              console.log('Al final no envio nada')
             }
           };
           xhr.send(formData);
@@ -260,7 +249,6 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-    // borderRadius: 20,
     resizeMode: "contain",
   },
   buttonContainer: {
