@@ -12,9 +12,6 @@ const Footer = () => {
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
-                <TouchableOpacity onPress={() => {openURL("https://www.instagram.com/xxoscarcuencaxx/")}}>
-                    <FontAwesome name="instagram" size={30} color="#FFF" />
-                </TouchableOpacity>
                 <TouchableOpacity onPress={() => {openURL("https://github.com/CuencaOscar")}}>
                     <FontAwesome name="github" size={30} color="#FFF" />
                 </TouchableOpacity>
@@ -37,7 +34,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        width: '60%',
+        width: '40%',
         marginBottom: 10,
     },
     text: {

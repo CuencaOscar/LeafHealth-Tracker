@@ -1,24 +1,10 @@
-// import { initializeApp, getApps } from "firebase/app";
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
-const firebaseConfig = {
-    apiKey: "REDACTED_FIREBASE_API_KEY",
-    authDomain: "leafhealth-tracker.firebaseapp.com",
-    projectId: "leafhealth-tracker",
-    storageBucket: "leafhealth-tracker.appspot.com",
-    messagingSenderId: "590391175083",
-    appId: "1:590391175083:web:236d6e34fcbd6ffc3cd4ee"
-  };
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-  // let app;
-  // if (getApps().length === 0) {
-  //   app = initializeApp(firebaseConfig);
-  // }
-  
-  // export default app;
+import { firebaseConfig } from "./config";
 
-  const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const db_storage = getStorage(app);
 
