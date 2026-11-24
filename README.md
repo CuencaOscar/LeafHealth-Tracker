@@ -21,10 +21,13 @@ Valencia (VIU).
 
 ## Architecture
 
-```
-Expo app ──► Firebase Storage (image) ──► PhytoAnalytic Engine /api ──► ResNet9
-    │                                              │
-    └──────────── Cloud Firestore (history) ◄──────┘
+```mermaid
+flowchart LR
+    app["📱 Expo app"] -- "image" --> storage[("Firebase Storage")]
+    storage --> api["⚙️ PhytoAnalytic Engine<br/>/api"]
+    api --> model["🌿 ResNet9<br/>PyTorch"]
+    api -- "result" --> history[("Cloud Firestore<br/>history")]
+    history --> app
 ```
 
 ## Tech stack
