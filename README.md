@@ -7,6 +7,8 @@ model served through a Flask API, and keeps a geolocated history of every analys
 Developed for my **Master's thesis in Web Applications and Services Development** at Universidad Internacional de
 Valencia (VIU).
 
+![CI](https://github.com/CuencaOscar/LeafHealth-Tracker/actions/workflows/ci.yml/badge.svg)
+
 ![LeafHealth Tracker screens](docs/screenshots.png)
 
 ## Features
